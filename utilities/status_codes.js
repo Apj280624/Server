@@ -64,4 +64,6 @@ const statusCodes = {
   NETWORK_AUTHENTICATION_REQUIRED_511: 511,
 };
 
-module.exports = { statusCodes };
+module.exports = {
+  statusCodes,
+};

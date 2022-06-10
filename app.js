@@ -5,8 +5,11 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 // my modules
-const { sendEmail, generateOTPText } = require("./utilities/server-utility.js");
-// const statusCodes = require("./node_modules/status-code");
+
+const { routes } = require("./utilities/server_vars_utility.js");
+const { putVOTP } = require("./request_handlers/put_votp.js");
+const { postSignUp } = require("./request_handlers/post_sign_up.js");
+const { postSignIn } = require("./request_handlers/post_sign_in.js");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,18 +34,25 @@ async function main() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.put("/votp", (req, res) => {
-  // console.log(req.body.email);
-  // send an otp to the provided email and store the otp with time stamp and email as votp
-  // console.log(statusCodes.OK_200);
-  sendEmail(req, res, req.body.email, generateOTPText(), 1);
+app.put(routes.VOTP, (req, res) => {
+  // console.log(req.body);
+  // send an otp to the provided email and store the otp on db with time stamp and email as votp
+  putVOTP(req, res);
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.post("/sign-up", (req, res) => {
-  console.log(req.body);
-  // first verify otp value and expiration from db then register user
+app.post(routes.SIGN_UP, (req, res) => {
+  // console.log(req.body);
+  // first verify otp value and expiration from db then register user if not already registered
+  postSignUp(req, res);
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.post(routes.SIGN_IN, (req, res) => {
+  // console.log(req.body);
+  postSignIn(req, res);
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
