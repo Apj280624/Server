@@ -33,7 +33,7 @@ async function postSignUp(req, res) {
       } else if (foundOTPDoc.OTP !== userCredentials.OTP) {
         res.status(400).send(statusText.OTP_WRONG);
       } else {
-        console.log("OTP verified");
+        // console.log("OTP verified");
         // otp verified, try to sign up
         signUserUp(userCredentials, res);
       }

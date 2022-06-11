@@ -54,6 +54,8 @@ const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   collegeName: String,
+  branchName: String,
+  graduationYear: String,
   emailAddress: String,
   password: String,
   timeStamp: Date,
