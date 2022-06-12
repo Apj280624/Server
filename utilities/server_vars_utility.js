@@ -1,5 +1,6 @@
 const vars = {
   OTPExpirationDurationInSeconds: 200000,
+  TokenExpirationDurationInSeconds: 500000,
   saltRounds: 10,
 };
 
@@ -9,6 +10,8 @@ const routes = {
   FORGOT_PASSWORD: "/auth/forgot-password",
   VOTP: "/auth/votp",
   FOTP: "/auth/fotp",
+  VERIFY_TOKEN: "/verify-token",
+  CONTRIBUTE: "/contribute",
 };
 
 const statusText = {
@@ -23,6 +26,12 @@ const statusText = {
   OTP_EXPIRED: "OTP has been expired",
   OTP_WRONG: "You have entered a wrong OTP",
   SOMETHING_WENT_WRONG: "Something went wrong, Please try again",
+  TOKEN_INVALID: "You're not signed in. Please sign in to contribute",
+  TOKEN_EXPIRED: "The session has expired. Please sign in again to contribute",
+  TOKEN_VERIFIED: "You're are already signed in",
+  CONTRIBUTION_SUCCESS: "Your contribution has been added successfully",
+  CONTRIBUTION_FAILED:
+    "We were unable to add your contribution. Please try again",
 };
 
 module.exports = {

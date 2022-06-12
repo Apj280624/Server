@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 
 // my modules
 const { User } = require("../utilities/mongoose_models");
+const { generateTimeStamp } = require("../utilities/server_utility");
 const { statusText } = require("../utilities/server_vars_utility");
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +42,7 @@ function postSignIn(req, res) {
           } else {
             // finally sign in the user, create and return a jwt token
             jwt.sign(
-              { emailAddress: emailAddress, timeStamp: new Date() },
+              { emailAddress: emailAddress, timeStamp: generateTimeStamp() },
               process.env.ACCESS_TOKEN_SECRET,
               (jwtError, token) => {
                 if (jwtError || !token) {

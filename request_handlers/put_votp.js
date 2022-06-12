@@ -3,7 +3,10 @@ const nodemailer = require("nodemailer");
 
 // my modules
 const { VOTP } = require("../utilities/mongoose_models.js");
-const { generateOTP } = require("../utilities/server_utility.js");
+const {
+  generateOTP,
+  generateTimeStamp,
+} = require("../utilities/server_utility.js");
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,10 +47,12 @@ async function putVOTP(req, res) {
   }
 }
 
+/* upsert: bool - creates the object if it doesn't exist. defaults to false.
+overwrite: bool - if true, replace the entire document. */
 async function storeOTPOnDB(res, recipientEmailAddress, OTP) {
   await VOTP.findOneAndUpdate(
     { emailAddress: recipientEmailAddress },
-    { OTP: OTP, timeStamp: new Date() },
+    { OTP: OTP, timeStamp: generateTimeStamp() },
     { overwrite: false, upsert: true },
     (err, doc) => {
       if (err) {

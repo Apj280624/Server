@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const VOTPSchema = new mongoose.Schema({
   emailAddress: String,
   OTP: String,
-  timeStamp: Date,
+  timeStamp: String,
 });
 
 VOTPSchema.index({ emailAddress: 1 }); // schema level index
@@ -30,7 +30,7 @@ VOTP.on("index", (err) => {
 const FOTPSchema = new mongoose.Schema({
   emailAddress: String,
   OTP: String,
-  timeStamp: Date,
+  timeStamp: String,
 });
 
 FOTPSchema.index({ emailAddress: 1 }); // schema level index
@@ -46,7 +46,7 @@ FOTP.on("index", (err) => {
   }
 });
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////// USER ///////////////////////////////////////////////////
 
 // Schema
 
@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
   graduationYear: String,
   emailAddress: String,
   password: String,
-  timeStamp: Date,
+  timeStamp: String,
 });
 
 userSchema.index({ emailAddress: 1 }); // schema level index
@@ -72,10 +72,49 @@ User.on("index", (err) => {
   }
 });
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////// CONTRIBUTION ///////////////////////////////////////////////////
+
+// Schema
+
+const contributionDetailsSchema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  collegeName: String,
+  branchName: String,
+  graduationYear: String,
+  emailAddress: String,
+  companyName: String,
+  roleName: String,
+  monthName: String,
+  year: String,
+  difficulty: String,
+  experience: String,
+  tip: String,
+  timeStamp: String,
+});
+
+contributionDetailsSchema.index({ emailAddress: 1 }); // schema level index
+
+// Model
+
+const ContributionDetails = mongoose.model(
+  "ContributionDetail",
+  contributionDetailsSchema
+);
+
+ContributionDetails.on("index", (err) => {
+  if (err) {
+    // console.log(err);
+  } else {
+    console.log("ContributionDetails Index created successfully");
+  }
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = {
   VOTP,
   FOTP,
   User,
+  ContributionDetails,
 };

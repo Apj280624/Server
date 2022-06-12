@@ -10,11 +10,27 @@ const { vars } = require("./server_vars_utility.js");
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function isExpired(oldTimeStamp, newTimeStamp) {
+// here the time stamps are iso, so pass them into new Date to get the date and then apply calculations upon them
+function isExpired(oldTimeStamp, newTimeStamp, expirationDurationInSeconds) {
   const timeDurationInSeconds = Math.floor(
-    Math.abs(newTimeStamp - oldTimeStamp) / 1000
+    Math.abs(new Date(newTimeStamp) - new Date(oldTimeStamp)) / 1000
   );
-  return timeDurationInSeconds > vars.OTPExpirationDurationInSeconds;
+
+  // console.log(
+  //   new Date(newTimeStamp) +
+  //     " " +
+  //     new Date(oldTimeStamp) +
+  //     " " +
+  //     timeDurationInSeconds
+  // );
+  return timeDurationInSeconds > expirationDurationInSeconds;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// it generates a timestamp as an iso string
+function generateTimeStamp() {
+  return new Date().toISOString();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,4 +47,5 @@ function generateOTP() {
 module.exports = {
   isExpired,
   generateOTP,
+  generateTimeStamp,
 };

@@ -6,7 +6,10 @@ const bcrypt = require("bcrypt");
 
 // my modules
 const { VOTP, User } = require("../utilities/mongoose_models.js");
-const { isExpired } = require("../utilities/server_utility.js");
+const {
+  isExpired,
+  generateTimeStamp,
+} = require("../utilities/server_utility.js");
 const { vars, statusText } = require("../utilities/server_vars_utility.js");
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,7 +31,13 @@ async function postSignUp(req, res) {
       } else if (!foundOTPDoc) {
         // db has no otp associated with this email
         res.status(400).send(statusText.OTP_NOT_OURS);
-      } else if (isExpired(foundOTPDoc.timeStamp, new Date())) {
+      } else if (
+        isExpired(
+          foundOTPDoc.timeStamp,
+          new Date(),
+          vars.OTPExpirationDurationInSeconds
+        )
+      ) {
         res.status(400).send(statusText.OTP_EXPIRED);
       } else if (foundOTPDoc.OTP !== userCredentials.OTP) {
         res.status(400).send(statusText.OTP_WRONG);
@@ -51,10 +60,10 @@ async function signUserUp(userCredentials, res) {
       } else if (foundUser) {
         res.status(400).send(statusText.USER_EMAIL_EXISTS);
       } else {
-        // finally sign up, remove otp field and update password field by hashed password in userCredentials
+        // finally sign up, add timeStamp, remove otp field and  update password field by hashed password in userCredentials
         delete userCredentials.OTP; // otp field is not required now
-        console.log(userCredentials.password);
-        console.log(vars.saltRounds);
+        // console.log(userCredentials.password);
+        // console.log(vars.saltRounds);
         bcrypt.hash(
           userCredentials.password,
           vars.saltRounds,
@@ -66,6 +75,7 @@ async function signUserUp(userCredentials, res) {
               const newUser = new User({
                 ...userCredentials,
                 password: hashedPassword,
+                timeStamp: generateTimeStamp(),
               });
 
               // console.log(newUser);
