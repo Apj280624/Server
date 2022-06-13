@@ -12,6 +12,7 @@ const routes = {
   FOTP: "/auth/fotp",
   VERIFY_TOKEN: "/verify-token",
   CONTRIBUTE: "/contribute",
+  CONTRIBUTIONS: "/contributions",
 };
 
 const statusText = {
@@ -32,6 +33,10 @@ const statusText = {
   CONTRIBUTION_SUCCESS: "Your contribution has been added successfully",
   CONTRIBUTION_FAILED:
     "We were unable to add your contribution. Please try again",
+  CONTRIBUTIONS_NOT_FOUND:
+    "We were unable to fetch any interview experiences. Please visit this section after sometime",
+  CONTRIBUTIONS_FOUND:
+    "All the interview experiences were fetched successfully",
 };
 
 module.exports = {

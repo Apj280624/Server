@@ -88,6 +88,7 @@ const contributionDetailsSchema = new mongoose.Schema({
   monthName: String,
   year: String,
   difficulty: String,
+  opportunity: String,
   experience: String,
   tip: String,
   timeStamp: String,
@@ -106,7 +107,7 @@ ContributionDetails.on("index", (err) => {
   if (err) {
     // console.log(err);
   } else {
-    console.log("ContributionDetails Index created successfully");
+    // console.log("ContributionDetails Index created successfully");
   }
 });
 

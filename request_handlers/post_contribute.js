@@ -55,6 +55,8 @@ function postContribute(req, res) {
           } else if (!foundDoc) {
             res.status(500).send(statusText.CONTRIBUTION_FAILED);
           } else {
+            // add contribution to DB
+
             /* object destructuring was not working with foundDoc maye be because of _id field in foundDoc, so i created
             an object */
 
@@ -81,8 +83,7 @@ function postContribute(req, res) {
             });
           }
         }
-      );
-      // add contribution to DB
+      ).clone(); // .clone() for multiple requests;
     }
   });
 }
