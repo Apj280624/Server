@@ -74,14 +74,16 @@ function postContribute(req, res) {
                 emailAddress: emailAddress,
               };
 
+              const currentTimeStamp = generateTimeStamp();
               const timeStampObject = {
-                creationTimeStamp: generateTimeStamp(),
-                updationTimeStamp: creationTimeStamp,
+                creationTimeStamp: currentTimeStamp,
+                updationTimeStamp: currentTimeStamp,
               };
 
               const newInterviewExperience = new InterviewExperience({
                 ...foundUser,
                 ...interviewExperience,
+                ...timeStampObject,
               });
 
               // console.log(newInterviewExperience);

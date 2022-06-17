@@ -58,7 +58,8 @@ const userSchema = new mongoose.Schema({
   graduationYear: String,
   emailAddress: String,
   password: String,
-  timeStamp: String,
+  creationTimeStamp: String,
+  updationTimeStamp: String,
 });
 
 userSchema.index({ emailAddress: 1 }); // schema level index

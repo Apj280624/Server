@@ -91,7 +91,7 @@ async function getExperiences(emailAddress, foundUser, res) {
   await InterviewExperience.find(
     { emailAddress: emailAddress },
     null,
-    { sort: { timeStamp: 1 } },
+    { sort: { updationTimeStamp: -1, companyName: 1 } },
     (err, foundInterviewExperiences) => {
       if (err) {
         // console.log(err);

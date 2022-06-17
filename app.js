@@ -88,7 +88,24 @@ app.get(routes.INTERVIEW_EXPERIENCES, (req, res) => {
 /////////////////////////////////////////// READ AN INTERVIEW EXPERIENCE ///////////////////////////////////
 
 // app.get("/interview-experience/read/:id", (req, res) => {
-app.get(`${routes.READ}/:id`, (req, res) => {
+// app.get(`${routes.READ}/:id`, (req, res) => {
+//   // console.log(req.params);
+//   getRead(req, res);
+// });
+
+/*
+read and edit operation both need different fields to be returned and if you don't wish to create two routes  
+for read and edit interview experience create a single route named as 
+
+/interview-experience/:{operation}/:id
+
+operation could be read or edit
+based upon the values of value of operation you can return the fields
+
+for now all the fields are being returned
+*/
+
+app.get(`${routes.PARTICULAR_INTERVIEW_EXPERIENCE}/:id`, (req, res) => {
   // console.log(req.params);
   getRead(req, res);
 });

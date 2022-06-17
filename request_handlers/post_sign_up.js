@@ -72,10 +72,16 @@ async function signUserUp(userCredentials, res) {
               // console.log(err);
               res.status(400).send(statusText.SIGN_UP_FAIL);
             } else {
+              const currentTimeStamp = generateTimeStamp();
+              const timeStampObject = {
+                creationTimeStamp: currentTimeStamp,
+                updationTimeStamp: currentTimeStamp,
+              };
+
               const newUser = new User({
                 ...userCredentials,
                 password: hashedPassword,
-                timeStamp: generateTimeStamp(),
+                ...timeStampObject,
               });
 
               // console.log(newUser);

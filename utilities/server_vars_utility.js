@@ -15,6 +15,7 @@ const routes = {
   ACCOUNT_INTERVIEW_EXPERIENCES: "/account/interview-experiences",
   INTERVIEW_EXPERIENCES: "/interview-experiences",
   READ: "/interview-experience/read",
+  PARTICULAR_INTERVIEW_EXPERIENCE: "/particular-interview-experience",
 };
 
 const statusText = {
