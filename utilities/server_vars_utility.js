@@ -12,7 +12,9 @@ const routes = {
   FOTP: "/auth/fotp",
   VERIFY_TOKEN: "/verify-token",
   CONTRIBUTE: "/contribute",
-  CONTRIBUTIONS: "/contributions",
+  ACCOUNT_INTERVIEW_EXPERIENCES: "/account/interview-experiences",
+  INTERVIEW_EXPERIENCES: "/interview-experiences",
+  READ: "/interview-experience/read",
 };
 
 const statusText = {
@@ -27,16 +29,30 @@ const statusText = {
   OTP_EXPIRED: "OTP has been expired",
   OTP_WRONG: "You have entered a wrong OTP",
   SOMETHING_WENT_WRONG: "Something went wrong, Please try again",
-  TOKEN_INVALID: "You're not signed in. Please sign in to contribute",
-  TOKEN_EXPIRED: "The session has expired. Please sign in again to contribute",
+  NOT_AUTHORIZED: "You're not authorized to see this page. Please sign in",
+  TOKEN_INVALID_CANNOT_CONTRIBUTE:
+    "You're not signed in. Please sign in to contribute",
+  TOKEN_INVALID_CANNOT_DISPLAY_ACCOUNT:
+    "You're not signed in. Please sign in to see your account information",
+  ACCOUNT_FETCH_FAILED:
+    "We were unable to fetch your account information. Please try again",
+  ACCOUNT_NOT_FOUND:
+    "We were unable to find any account associated with this Email address",
+  TOKEN_EXPIRED: "The session has expired. Please sign in again",
   TOKEN_VERIFIED: "You're are already signed in",
   CONTRIBUTION_SUCCESS: "Your contribution has been added successfully",
   CONTRIBUTION_FAILED:
     "We were unable to add your contribution. Please try again",
-  CONTRIBUTIONS_NOT_FOUND:
+  INTERVIEW_EXPERIENCES_NOT_FOUND:
     "We were unable to fetch any interview experiences. Please visit this section after sometime",
-  CONTRIBUTIONS_FOUND:
+  INTERVIEW_EXPERIENCES_FOUND:
     "All the interview experiences were fetched successfully",
+  INTERVIEW_EXPERIENCE_NOT_FOUND:
+    "We were unable to fetch the interview experience. Please visit this section after sometime",
+  INTERVIEW_EXPERIENCE_FOUND:
+    "The interview experience was fetched successfully",
+  UNABLE_TO_FIND_RESOURCE:
+    "We were unable to fulfill the request. Please try again later",
 };
 
 module.exports = {

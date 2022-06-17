@@ -12,7 +12,14 @@ const { postSignUp } = require("./request_handlers/post_sign_up.js");
 const { postSignIn } = require("./request_handlers/post_sign_in.js");
 const { getVerifyToken } = require("./request_handlers/get_verify_token.js");
 const { postContribute } = require("./request_handlers/post_contribute.js");
-const { getContributions } = require("./request_handlers/get_contributions.js");
+const {
+  getInterviewExperiences,
+} = require("./request_handlers/get_interview_experiences.js");
+const { getRead } = require("./request_handlers/get_read.js");
+
+const {
+  getAccountInterviewExperiences,
+} = require("./request_handlers/get_account_interview_experiences.js");
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -71,11 +78,26 @@ app.post(routes.CONTRIBUTE, (req, res) => {
   postContribute(req, res);
 });
 
-/////////////////////////////////////////// ALL CONTRIBUTIONS //////////////////////////////////////////////
+/////////////////////////////////////////// ALL INTERVIEW EXPERIENCES //////////////////////////////////////////
 
-app.get(routes.CONTRIBUTIONS, (req, res) => {
+app.get(routes.INTERVIEW_EXPERIENCES, (req, res) => {
   // console.log(req);
-  getContributions(req, res);
+  getInterviewExperiences(req, res);
+});
+
+/////////////////////////////////////////// READ AN INTERVIEW EXPERIENCE ///////////////////////////////////
+
+// app.get("/interview-experience/read/:id", (req, res) => {
+app.get(`${routes.READ}/:id`, (req, res) => {
+  // console.log(req.params);
+  getRead(req, res);
+});
+
+/////////////////////////////////////////// ACCOUNT INTERVIEW EXPERIENCES ///////////////////////////////////
+
+app.get(routes.ACCOUNT_INTERVIEW_EXPERIENCES, (req, res) => {
+  // console.log(req);
+  getAccountInterviewExperiences(req, res);
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////

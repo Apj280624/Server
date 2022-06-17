@@ -76,7 +76,7 @@ User.on("index", (err) => {
 
 // Schema
 
-const contributionDetailsSchema = new mongoose.Schema({
+const interviewExperienceSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   collegeName: String,
@@ -91,23 +91,24 @@ const contributionDetailsSchema = new mongoose.Schema({
   opportunity: String,
   experience: String,
   tip: String,
-  timeStamp: String,
+  creationTimeStamp: String,
+  updationTimeStamp: String,
 });
 
-contributionDetailsSchema.index({ emailAddress: 1 }); // schema level index
+interviewExperienceSchema.index({ emailAddress: 1 }); // schema level index
 
 // Model
 
-const ContributionDetails = mongoose.model(
-  "ContributionDetail",
-  contributionDetailsSchema
+const InterviewExperience = mongoose.model(
+  "InterviewExperience",
+  interviewExperienceSchema
 );
 
-ContributionDetails.on("index", (err) => {
+InterviewExperience.on("index", (err) => {
   if (err) {
     // console.log(err);
   } else {
-    // console.log("ContributionDetails Index created successfully");
+    // console.log("InterviewExperience Index created successfully");
   }
 });
 
@@ -117,5 +118,5 @@ module.exports = {
   VOTP,
   FOTP,
   User,
-  ContributionDetails,
+  InterviewExperience,
 };
