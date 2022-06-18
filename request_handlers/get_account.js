@@ -25,7 +25,7 @@ const obj = { ...foundUser };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-async function getAccountInterviewExperiences(req, res) {
+async function getAccount(req, res) {
   if (!req.headers || !req.headers.authorization) {
     // console.log("missing header and body");
     res.status(401).send(statusText.NOT_AUTHORIZED);
@@ -64,7 +64,7 @@ async function getAccountInterviewExperiences(req, res) {
               "branchName",
               "graduationYear",
               "emailAddress",
-              "timeStamp",
+              "creationTimeStamp",
             ],
             (err, foundUser) => {
               if (err) {
@@ -75,7 +75,7 @@ async function getAccountInterviewExperiences(req, res) {
               } else {
                 // fetch interview experiences
                 // console.log(emailAddress);
-                getExperiences(emailAddress, foundUser, res);
+                getAccountInterviewExperiences(emailAddress, foundUser, res);
               }
             }
           ).clone(); // .clone() for multiple requests;
@@ -84,7 +84,8 @@ async function getAccountInterviewExperiences(req, res) {
     );
   }
 }
-async function getExperiences(emailAddress, foundUser, res) {
+
+async function getAccountInterviewExperiences(emailAddress, foundUser, res) {
   // just get all contributions of the account holder from DB
 
   // null is important in the below query
@@ -101,15 +102,21 @@ async function getExperiences(emailAddress, foundUser, res) {
       } else {
         // console.log(foundInterviewExperiences.length);
         // console.log(foundUser);
-
         // see comment on the top section to find out why toObject method was called
-
         // console.log(foundInterviewExperiences);
+        // res.status(200).send({
+        //   personalDetails: {
+        //     ...foundUser.toObject(),
+        //     ...{ noOfContributions: foundInterviewExperiences.length },
+        //   },
+        //   arrayOfInterviewExperiences: foundInterviewExperiences,
+        //   statusText: statusText.INTERVIEW_EXPERIENCES_FOUND,
+        // });
 
         res.status(200).send({
           personalDetails: {
             ...foundUser.toObject(),
-            ...{ noOfContributions: foundInterviewExperiences.length },
+            noOfContributions: foundInterviewExperiences.length,
           },
           arrayOfInterviewExperiences: foundInterviewExperiences,
           statusText: statusText.INTERVIEW_EXPERIENCES_FOUND,
@@ -120,5 +127,5 @@ async function getExperiences(emailAddress, foundUser, res) {
 }
 
 module.exports = {
-  getAccountInterviewExperiences,
+  getAccount,
 };

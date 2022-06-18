@@ -62,7 +62,7 @@ function postContribute(req, res) {
             } else {
               // add contribution to DB
 
-              /* object destructuring was not working with foundDoc maye be because of _id field in foundDoc, so i created
+              /* object destructuring was not working with foundDoc may be because of _id field in foundDoc, so i created
             an object */
 
               const foundUser = {
@@ -72,6 +72,7 @@ function postContribute(req, res) {
                 branchName: foundDoc.branchName,
                 graduationYear: foundDoc.graduationYear,
                 emailAddress: emailAddress,
+                isDeleted: false,
               };
 
               const currentTimeStamp = generateTimeStamp();

@@ -92,6 +92,7 @@ const interviewExperienceSchema = new mongoose.Schema({
   opportunity: String,
   experience: String,
   tip: String,
+  isDeleted: Boolean,
   creationTimeStamp: String,
   updationTimeStamp: String,
 });

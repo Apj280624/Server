@@ -34,10 +34,10 @@ function postSignIn(req, res) {
         foundUser.password,
         async (bcryptError, bcryptResult) => {
           if (bcryptError) {
-            console.log("bcrypt password comparision error");
+            // console.log("bcrypt password comparision error");
             res.status(400).send(statusText.SIGN_IN_FAIL);
           } else if (!bcryptResult) {
-            console.log("no user found with given password");
+            // console.log("no user found with given password");
             res.status(400).send(statusText.USER_NOT_FOUND);
           } else {
             // finally sign in the user, create and return a jwt token
@@ -46,7 +46,7 @@ function postSignIn(req, res) {
               process.env.ACCESS_TOKEN_SECRET,
               (jwtError, token) => {
                 if (jwtError || !token) {
-                  console.log(jwtError);
+                  // console.log(jwtError);
                   res.status(400).send(statusText.SIGN_IN_FAIL);
                 } else {
                   res.status(200).send({

@@ -1,8 +1,13 @@
 const { InterviewExperience } = require("../utilities/mongoose_models.js");
 const { statusText } = require("../utilities/server_vars_utility.js");
 
-function getRead(req, res) {
+function getParticularInterviewExperience(req, res) {
+  if (!req.params || !req.params.id) {
+    res.status(401).send(statusText.SOMETHING_WENT_WRONG);
+  }
+
   // console.log(req.params);
+
   InterviewExperience.findById(
     req.params.id,
     (err, foundInterviewExperience) => {
@@ -22,5 +27,5 @@ function getRead(req, res) {
 }
 
 module.exports = {
-  getRead,
+  getParticularInterviewExperience,
 };

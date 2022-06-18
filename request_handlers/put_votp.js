@@ -2,20 +2,47 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 
 // my modules
-const { VOTP } = require("../utilities/mongoose_models.js");
+const { VOTP, User } = require("../utilities/mongoose_models.js");
 const {
   generateOTP,
   generateTimeStamp,
 } = require("../utilities/server_utility.js");
+const { statusText } = require("../utilities/server_vars_utility");
+
+/* 
+check if the email is already signed up, we won't send an otp in such a case,
+if email is not already signed up then send otp and store it on db
+*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 async function putVOTP(req, res) {
   if (!req.body || !req.body.emailAddress) {
-    res.status(400).send("Something went wrong. Please try again");
+    res.status(400).send(statusText.SOMETHING_WENT_WRONG);
+  } else {
+    const recipientEmailAddress = req.body.emailAddress;
+    // console.log(req.body);
+
+    await User.findOne(
+      { emailAddress: recipientEmailAddress },
+      (err, foundUser) => {
+        if (err) {
+          console.log(err);
+          res.status(400).send(statusText.SIGN_UP_FAIL);
+        } else if (foundUser) {
+          res.status(400).send(statusText.EMAIL_ALREADY_EXISTS);
+        } else {
+          sendOTP(recipientEmailAddress, res);
+        }
+      }
+    ).clone(); // .clone() for multiple requests
   }
-  const recipientEmailAddress = req.body.emailAddress;
-  // console.log(req.body);
+}
+
+/*
+ cannot name it as sendMail because a function with this name is already being used by the transporter
+*/
+async function sendOTP(recipientEmailAddress, res) {
   const OTP = generateOTP();
   var transporter = nodemailer.createTransport({
     service: "gmail",
@@ -33,34 +60,33 @@ async function putVOTP(req, res) {
   };
 
   try {
-    await transporter.sendMail(mailOptions, function (error, info) {
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.log(error);
-        res.send("We were unable to send an Email");
+        // console.log(error);
+        res.status(500).send(statusText.EMAIL_SEND_FAIL);
       } else {
-        storeOTPOnDB(res, recipientEmailAddress, OTP);
+        storeOTPOnDB(recipientEmailAddress, OTP, res);
       }
     });
   } catch (error) {
-    console.log(error);
-    res.send("We were unable to send an Email");
+    // console.log(error);
+    res.status(500).send(statusText.EMAIL_SEND_FAIL);
   }
 }
 
 /* upsert: bool - creates the object if it doesn't exist. defaults to false.
 overwrite: bool - if true, replace the entire document. */
-async function storeOTPOnDB(res, recipientEmailAddress, OTP) {
+async function storeOTPOnDB(recipientEmailAddress, OTP, res) {
   await VOTP.findOneAndUpdate(
     { emailAddress: recipientEmailAddress },
     { OTP: OTP, timeStamp: generateTimeStamp() },
     { overwrite: false, upsert: true },
-    (err, doc) => {
+    (err) => {
       if (err) {
-        console.log(err);
-        res.status(500).send("We were unable to send OTP. Please try again");
+        // console.log(err);
+        res.status(500).send(statusText.OTP_SEND_FAIL);
       } else {
-        // console.log(doc._id.toString());
-        res.status(200).send("OTP has been sent successfully");
+        res.status(200).send(statusText.OTP_SEND_SUCCESS);
       }
     }
   ).clone(); // .clone() for multiple requests
