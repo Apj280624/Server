@@ -107,9 +107,9 @@ app.post(routes.CONTRIBUTE, (req, res) => {
   postContribute(req, res);
 });
 
-/////////////////////////////////////////// ALL INTERVIEW EXPERIENCES //////////////////////////////////////////
+//////////////////////////////// ALL INTERVIEW EXPERIENCES, INCLUDING SEARCHED //////////////////////////////////
 
-app.get(routes.INTERVIEW_EXPERIENCES, (req, res) => {
+app.get(`${routes.INTERVIEW_EXPERIENCES}/:keyword`, (req, res) => {
   // console.log(req);
   getInterviewExperiences(req, res);
 });

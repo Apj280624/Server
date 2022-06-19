@@ -3,13 +3,36 @@
 const { InterviewExperience } = require("../utilities/mongoose_models.js");
 const { statusText } = require("../utilities/server_vars_utility.js");
 
+/* 
+article for searching by starting string:
+
+https://stackoverflow.com/questions/29809887/mongoose-query-for-starts-with
+
+google: mongoose start with
+
+*/
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function getInterviewExperiences(req, res) {
   // just get all contributions from DB
-  // console.log(req);
+  console.log(req.params);
+
+  // User.find({ username: { $regex: "^" + req.params.username } });
+
+  /* to know about searching and regex see the comments above */
+
+  console.log(req.params.keyword);
+
+  const conditions =
+    !req.params || !req.params.keyword || req.params.keyword === "all"
+      ? null
+      : { companyName: { $regex: "^" + req.params.keyword } };
+
+  console.log(conditions);
+
   InterviewExperience.find(
-    null,
+    conditions,
     null,
     { sort: { updationTimeStamp: -1, companyName: 1 } },
     (err, foundInterviewExperiences) => {
