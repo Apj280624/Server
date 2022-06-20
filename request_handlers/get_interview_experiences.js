@@ -16,20 +16,17 @@ google: mongoose start with
 
 function getInterviewExperiences(req, res) {
   // just get all contributions from DB
-  console.log(req.params);
-
-  // User.find({ username: { $regex: "^" + req.params.username } });
 
   /* to know about searching and regex see the comments above */
 
-  console.log(req.params.keyword);
+  //  console.log(req.params.keyword);
 
   const conditions =
     !req.params || !req.params.keyword || req.params.keyword === "all"
       ? null
       : { companyName: { $regex: "^" + req.params.keyword } };
 
-  console.log(conditions);
+  // console.log(conditions);
 
   InterviewExperience.find(
     conditions,

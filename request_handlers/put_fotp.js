@@ -35,7 +35,7 @@ async function putFOTP(req, res) {
           console.log(err);
           res.status(500).send(statusText.SOMETHING_WENT_WRONG);
         } else if (!foundUser) {
-          res.status(400).send(statusText.USER_NOT_FOUND);
+          res.status(400).send(statusText.EMAIL_NOT_FOUND);
         } else {
           // try to send a otp mail
           const OTP = generateOTP();
