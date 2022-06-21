@@ -90,7 +90,7 @@ async function getAccountInterviewExperiences(emailAddress, foundUser, res) {
 
   // null is important in the below query
   await InterviewExperience.find(
-    { emailAddress: emailAddress },
+    { emailAddress: emailAddress, isDeleted: false },
     null,
     { sort: { updationTimeStamp: -1, companyName: 1 } },
     (err, foundInterviewExperiences) => {

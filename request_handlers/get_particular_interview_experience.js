@@ -8,8 +8,11 @@ function getParticularInterviewExperience(req, res) {
 
   // console.log(req.params);
 
-  InterviewExperience.findById(
-    req.params.id,
+  // InterviewExperience.findById(
+  InterviewExperience.findOne(
+    { _id: req.params.id, isDeleted: false },
+    null,
+    null,
     (err, foundInterviewExperience) => {
       if (err) {
         console.log(err);

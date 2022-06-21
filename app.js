@@ -49,7 +49,7 @@ app.use(express.json()); // app.use(bodyParser.json()) // to parse json request 
 main().catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(process.env.MONGODB_URI);
+  await mongoose.connect(process.env.ATLAS_URI);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////

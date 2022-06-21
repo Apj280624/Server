@@ -1,6 +1,7 @@
 const vars = {
-  OTPExpirationDurationInSeconds: 200000,
-  TokenExpirationDurationInSeconds: 500000,
+  OTPExpirationDurationInSeconds: 5 * 60,
+  OTPOldDurationInSeconds: 2 * 60 * 60,
+  TokenExpirationDurationInSeconds: 5 * 24 * 60 * 60,
   saltRounds: 10,
 };
 

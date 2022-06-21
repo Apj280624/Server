@@ -9,6 +9,7 @@ const { VOTP, User } = require("../utilities/mongoose_models.js");
 const {
   isExpired,
   generateTimeStamp,
+  isVeryOld,
 } = require("../utilities/server_utility.js");
 const { vars, statusText } = require("../utilities/server_vars_utility.js");
 
@@ -40,7 +41,7 @@ async function postSignUp(req, res) {
       { emailAddress: userCredentials.emailAddress },
       (err, foundUser) => {
         if (err) {
-          console.log(err);
+          // console.log(err);
           res.status(400).send(statusText.SIGN_UP_FAIL);
         } else if (foundUser) {
           res.status(400).send(statusText.EMAIL_ALREADY_EXISTS);
@@ -62,6 +63,15 @@ async function verifyOTP(userCredentials, res) {
         res.status(400).send(statusText.OTP_VERIFICATION_FAIL);
       } else if (!foundOTPDoc) {
         // db has no otp associated with this email
+        res.status(400).send(statusText.OTP_NOT_OURS);
+      } else if (
+        isVeryOld(
+          foundOTPDoc.timeStamp,
+          generateTimeStamp(),
+          vars.OTPExpirationDurationInSeconds,
+          vars.OTPOldDurationInSeconds
+        )
+      ) {
         res.status(400).send(statusText.OTP_NOT_OURS);
       } else if (
         isExpired(

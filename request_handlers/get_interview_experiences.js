@@ -29,7 +29,7 @@ function getInterviewExperiences(req, res) {
   // console.log(conditions);
 
   InterviewExperience.find(
-    conditions,
+    { ...conditions, isDeleted: false },
     null,
     { sort: { updationTimeStamp: -1, companyName: 1 } },
     (err, foundInterviewExperiences) => {
