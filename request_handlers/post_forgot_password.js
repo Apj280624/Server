@@ -8,12 +8,6 @@ const {
 } = require("../utilities/server_utility.js");
 const { statusText, vars } = require("../utilities/server_vars_utility.js");
 
-/* 
-we store a fotp only if the email is already signed up, this means if we just verify fotp then we know
-that the user is already signed up, so we don't need to start with check about sign up
-we can directly start with fotp verification, if there's no fotp associated with the email we dont go further
-*/
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 async function postForgotPassword(req, res) {
